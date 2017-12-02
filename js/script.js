@@ -20,8 +20,31 @@ function loadData() {
 	var address = streetStr + ', ' + cityStr;
 
 	var addressURL = `http://maps.googleapis.com/maps/api/streetview?size=600x300&location=${address}`;
+	var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+	url += '?' + $.param({
+	  'api-key': "7f0f1a26728d4d1db90c5f31f4e2a148",
+	  'q': address
+	});
+	
 	$body.append('<img class="bgimg" src="'+addressURL+'">');
-	console.log(streetStr, cityStr);
+	
+	$greeting.text('So you want to live at '+address+'?');
+	
+	var nytimes = "https://www.nytimes.com/";
+	
+	//http://developer.nytimes.com/article_search_v2.json
+	$.getJSON(url, function(data){
+		$.each(data.response.docs, function(i, item){
+			$nytElem.append('<li class="article"><a href="'+item.web_url+'">'+item.headline.main+'</a><p>'+item.snippet+'</p></li>');
+		});
+		console.log(data.response.docs);
+	});
+	
+
+
+
+	//
+	
 	return false;
 };
 
