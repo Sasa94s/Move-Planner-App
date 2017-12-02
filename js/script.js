@@ -30,12 +30,15 @@ function loadData() {
 	
 	$greeting.text('So you want to live at '+address+'?');
 	
-	$('#nytimes-header').text('New York Times Articles About '+cityStr);
+	
 	$.getJSON(url, function(data){
+		$('#nytimes-header').text('New York Times Articles About '+cityStr);
 		$.each(data.response.docs, function(i, item){
 			$nytElem.append('<li class="article"><a href="'+item.web_url+'">'+item.headline.main+'</a><p>'+item.snippet+'</p></li>');
-		});
-		console.log(data.response.docs);
+		})
+	})
+	.fail(function() {
+		$('#nytimes-header').text('New York Times Articles Coult Not Be Loaded');
 	});
 	
 
