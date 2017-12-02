@@ -23,16 +23,14 @@ function loadData() {
 	var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
 	url += '?' + $.param({
 	  'api-key': "7f0f1a26728d4d1db90c5f31f4e2a148",
-	  'q': address
+	  'q': cityStr
 	});
 	
 	$body.append('<img class="bgimg" src="'+addressURL+'">');
 	
 	$greeting.text('So you want to live at '+address+'?');
 	
-	var nytimes = "https://www.nytimes.com/";
-	
-	//http://developer.nytimes.com/article_search_v2.json
+	$('#nytimes-header').text('New York Times Articles About '+cityStr);
 	$.getJSON(url, function(data){
 		$.each(data.response.docs, function(i, item){
 			$nytElem.append('<li class="article"><a href="'+item.web_url+'">'+item.headline.main+'</a><p>'+item.snippet+'</p></li>');
